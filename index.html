@@ -48,7 +48,7 @@ button,input,select{font:inherit}.app{max-width:1100px;margin:auto;padding:14px 
   <div class="drop" id="drop"><strong>Select clothing photos</strong><small>Choose many photos at once from your phone gallery</small></div>
   <input id="fileInput" type="file" accept="image/*" multiple hidden>
   <div class="progress" id="progress"><div class="bar"><i id="bar"></i></div><p id="progressText"></p></div>
-  <div class="notice"><b>AI classification:</b> when enabled, each new photo is analyzed for category, garment type, colors, pattern, visible brand text, sleeve, season and occasion.</div>
+  <div class="notice"><b>AI classification:</b> AI first sorts each item into a main category such as Dress, Top, Bottom, Outerwear or Knitwear, then identifies the exact garment type, colors, pattern, visible brand text, sleeve, season and occasion.</div>
   <div class="actions"><button class="btn" id="closeImport">Close</button><button class="btn primary" id="classifyPending">Classify pending</button></div>
 </div></div>
 
@@ -66,7 +66,7 @@ const $=s=>document.querySelector(s);
 const DB='wardrobe99-db', STORE='items';
 let db, items=[], view='closet', filter='All', importTarget='closet', current=null;
 let API_KEY=sessionStorage.getItem('wardrobe99-ai-key')||'', MODEL=sessionStorage.getItem('wardrobe99-ai-model')||'gpt-5.6-luna';
-const CATS=['Dress','Top','T-Shirt','Shirt','Blouse','Sweater','Jacket','Coat','Skirt','Pants','Jeans','Shorts','Jumpsuit','Activewear','Outerwear','Other'];
+const CATS=['Dress','Top','Bottom','Outerwear','Knitwear','Jumpsuit','Activewear','Sleepwear','Swimwear','Underwear','Shoes','Bag','Accessories','Other'];
 const COLORS={Black:'#111',White:'#fafafa',Gray:'#8d8d8d',Brown:'#8b5e3c',Beige:'#d8c5a7',Red:'#d83932',Pink:'#e987ad',Orange:'#e98332',Yellow:'#e6c52f',Green:'#4d8b57',Blue:'#3974b9',Purple:'#7d55a8',Navy:'#23375d',Cream:'#f4eddb',Multi:'#999'};
 function openDB(){return new Promise((res,rej)=>{let r=indexedDB.open(DB,1);r.onupgradeneeded=()=>{let d=r.result;if(!d.objectStoreNames.contains(STORE))d.createObjectStore(STORE,{keyPath:'id'})};r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
 function all(){return new Promise((res,rej)=>{let r=db.transaction(STORE).objectStore(STORE).getAll();r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
@@ -82,7 +82,7 @@ async function toDataURL(blob){return await new Promise((res,rej)=>{let r=new Fi
 async function classify(x){
   if(!API_KEY)throw new Error('Open AI settings and add an API key first.');
   let data=await toDataURL(x.thumbBlob||x.imageBlob);
-  let prompt='Classify this clothing photo. Return ONLY JSON with keys: name, category, garmentType, colors, pattern, brand, sleeve, season, occasion, confidence. category must be one of: '+CATS.join(', ')+'. colors must be 1 to 3 simple color names. pattern examples: Solid, Floral, Striped, Graphic, Animal, Plaid, Polka Dot, Abstract, Other. confidence is 0 to 1.';
+  let prompt='You are organizing a personal wardrobe. First identify the MAIN wardrobe category, then the specific garment type. Return ONLY JSON with keys: name, category, garmentType, colors, pattern, brand, sleeve, season, occasion, confidence. category MUST be exactly one of: '+CATS.join(', ')+'. Use Dress for dresses; Top for T-shirts, shirts, blouses, camisoles and similar tops; Bottom for skirts, pants, jeans and shorts; Outerwear for jackets and coats; Knitwear for sweaters and cardigans; Jumpsuit for jumpsuits/rompers; Activewear for gym/sports clothing; Sleepwear for pajamas/nightwear; Swimwear for swimsuits; Underwear for lingerie/underwear; Shoes, Bag, or Accessories when appropriate. garmentType should be the more specific item such as T-Shirt, Blouse, Shirt, Skirt, Jeans, Shorts, Sweater, Cardigan, Jacket, Coat, Mini Dress, Maxi Dress, etc. If unsure, choose the closest main category instead of Other. colors must be 1 to 3 simple color names. pattern examples: Solid, Floral, Striped, Graphic, Animal, Plaid, Polka Dot, Abstract, Other. confidence is 0 to 1.';
   let body={model:MODEL,input:[{role:'user',content:[{type:'input_text',text:prompt},{type:'input_image',image_url:data}]}],text:{format:{type:'json_object'}}};
   let r=await fetch('https://api.openai.com/v1/responses',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+API_KEY},body:JSON.stringify(body)});
   if(!r.ok)throw new Error((await r.text()).slice(0,200));
