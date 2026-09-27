@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Wardrobe99 AI</title>
+<style>
+:root{--bg:#f5f5f1;--card:#fff;--text:#171717;--muted:#777;--line:#e5e5df;--dark:#111;--green:#1f7a4d;--shadow:0 8px 28px rgba(0,0,0,.07)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+button,input,select{font:inherit}.app{max-width:1100px;margin:auto;padding:14px 14px 120px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px}.brand h1{margin:0;font-size:28px}.brand p{margin:4px 0 0;color:var(--muted);font-size:12px}.avatar{width:42px;height:42px;border-radius:14px;background:#111;color:#fff;display:grid;place-items:center;font-weight:800}
+.hero{background:#151515;color:#fff;border-radius:24px;padding:16px;margin:14px 0;box-shadow:var(--shadow)}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.metric{background:#ffffff12;border-radius:16px;padding:12px}.metric b{display:block;font-size:22px}.metric span{font-size:10px;color:#cfcfcf}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.tab{border:1px solid var(--line);background:#fff;padding:11px;border-radius:14px;font-weight:800}.tab.active{background:#111;color:#fff;border-color:#111}
+.toolbar{position:sticky;top:0;z-index:4;background:linear-gradient(var(--bg) 82%,transparent);padding:8px 0 10px}.search{display:flex;gap:8px}.search input{flex:1;background:#fff;border:1px solid var(--line);border-radius:15px;padding:12px 13px}.icon{border:0;background:#111;color:white;border-radius:15px;min-width:50px;font-weight:800}.filters{display:flex;gap:7px;overflow:auto;padding-top:8px}.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 11px;white-space:nowrap;font-size:12px}.chip.active{background:#111;color:white}
+.section{display:flex;justify-content:space-between;align-items:end;margin:16px 2px 10px}.section h2{margin:0;font-size:20px}.section span{font-size:12px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}.card{background:#fff;border-radius:18px;overflow:hidden;box-shadow:var(--shadow);border:1px solid #00000008}.photo{aspect-ratio:3/4;background:#ecece8}.photo img{width:100%;height:100%;object-fit:cover}.body{padding:9px}.name{font-weight:800;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;margin-top:5px}.newbadge{display:inline-block;background:#111;color:#fff;border-radius:999px;padding:3px 7px;font-size:9px;font-weight:800}.swatches{display:flex;gap:5px;margin-top:7px}.swatch{width:13px;height:13px;border-radius:50%;border:1px solid #0002}.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:46px 10px}
+.fab{position:fixed;right:18px;bottom:22px;border:0;background:#111;color:white;border-radius:999px;padding:14px 18px;font-weight:800;box-shadow:0 12px 34px #0004;z-index:8}
+.backdrop{position:fixed;inset:0;background:#0007;display:none;align-items:flex-end;z-index:20}.backdrop.show{display:flex}.sheet{width:100%;max-width:760px;margin:auto;background:#fff;border-radius:26px 26px 0 0;padding:16px 16px calc(18px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto}.handle{width:44px;height:5px;background:#d6d6d6;border-radius:99px;margin:0 auto 13px}.sub{color:var(--muted);font-size:12px;line-height:1.45}.drop{border:1.5px dashed #aaa;border-radius:18px;text-align:center;padding:25px 14px;background:#fafafa;margin-top:14px}.drop strong{display:block;font-size:17px;margin-bottom:4px}
+.actions{display:flex;gap:8px;margin-top:14px}.btn{flex:1;border:1px solid var(--line);background:#fff;border-radius:13px;padding:11px;font-weight:800}.btn.primary{background:#111;color:#fff;border-color:#111}.btn.danger{color:#a11}
+.progress{display:none;margin-top:14px}.progress.show{display:block}.bar{height:9px;background:#ecece8;border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:#111}.progress p{font-size:12px;color:var(--muted);margin:7px 0 0}
+.settings{display:grid;gap:10px}.settings label{font-size:12px;color:var(--muted)}.settings input,.settings select{width:100%;padding:11px;border:1px solid var(--line);border-radius:11px;background:#fff}
+.detail-img{width:100%;max-height:470px;object-fit:contain;background:#eee;border-radius:18px}.tags{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.tag{background:#efefe9;border-radius:999px;padding:6px 9px;font-size:11px}.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.info{background:#f6f6f3;border-radius:12px;padding:9px}.info small{display:block;color:var(--muted);margin-bottom:3px}.info b{font-size:12px}.notice{background:#f3f3ef;border-radius:12px;padding:10px;font-size:12px;color:#555;line-height:1.45;margin-top:12px}
+@media(min-width:720px){.grid{grid-template-columns:repeat(4,1fr)}.sheet{align-self:center;border-radius:26px;max-height:88vh}.backdrop{align-items:center}.fab{right:calc((100vw - 1100px)/2 + 18px)}}@media(max-width:430px){.metrics{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top"><div class="brand"><h1>Wardrobe99</h1><p>AI-organized wardrobe for 500+ items</p></div><div class="avatar">W</div></div>
+  <div class="hero"><div class="metrics">
+    <div class="metric"><b id="total">0</b><span>ALL ITEMS</span></div>
+    <div class="metric"><b id="newCount">0</b><span>NEW ARRIVALS</span></div>
+    <div class="metric"><b id="catCount">0</b><span>CATEGORIES</span></div>
+    <div class="metric"><b id="reviewCount">0</b><span>NEED REVIEW</span></div>
+  </div></div>
+  <div class="tabs">
+    <button class="tab active" data-view="closet">Closet</button>
+    <button class="tab" data-view="new">New Arrivals</button>
+  </div>
+  <div class="toolbar">
+    <div class="search"><input id="search" placeholder="Search color, category, brand, pattern…"><button id="aiBtn" class="icon">AI</button><button id="addBtn" class="icon">＋</button></div>
+    <div class="filters" id="filters"></div>
+  </div>
+  <div class="section"><h2 id="viewTitle">Closet</h2><span id="shown"></span></div>
+  <div class="grid" id="grid"></div>
+</div>
+<button class="fab" id="fab">＋ Add clothes</button>
+
+<div class="backdrop" id="importModal"><div class="sheet"><div class="handle"></div><h3 id="importTitle">Add clothes</h3><div class="sub" id="importSub"></div>
+  <div class="drop" id="drop"><strong>Select clothing photos</strong><small>Choose many photos at once from your phone gallery</small></div>
+  <input id="fileInput" type="file" accept="image/*" multiple hidden>
+  <div class="progress" id="progress"><div class="bar"><i id="bar"></i></div><p id="progressText"></p></div>
+  <div class="notice"><b>AI classification:</b> when enabled, each new photo is analyzed for category, garment type, colors, pattern, visible brand text, sleeve, season and occasion.</div>
+  <div class="actions"><button class="btn" id="closeImport">Close</button><button class="btn primary" id="classifyPending">Classify pending</button></div>
+</div></div>
+
+<div class="backdrop" id="settingsModal"><div class="sheet"><div class="handle"></div><h3>AI settings</h3><div class="sub">This standalone version keeps the API key only in the current browser session. A production version should call AI through a private backend.</div>
+  <div class="settings"><label>OpenAI API key<input id="apiKey" type="password" placeholder="sk-…"></label><label>Vision model<select id="model"><option>gpt-5.6-luna</option><option>gpt-5.6-terra</option><option>gpt-5.6-sol</option></select></label><label><input id="useAI" type="checkbox" checked> Automatically classify new uploads</label></div>
+  <div class="actions"><button class="btn" id="closeSettings">Cancel</button><button class="btn primary" id="saveSettings">Save</button></div>
+</div></div>
+
+<div class="backdrop" id="detailModal"><div class="sheet"><div class="handle"></div><div id="detail"></div>
+  <div class="actions"><button class="btn" id="closeDetail">Close</button><button class="btn primary" id="moveItem">Move to Closet</button><button class="btn danger" id="deleteItem">Delete</button></div>
+</div></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const DB='wardrobe99-db', STORE='items';
+let db, items=[], view='closet', filter='All', importTarget='closet', current=null;
+let API_KEY=sessionStorage.getItem('wardrobe99-ai-key')||'', MODEL=sessionStorage.getItem('wardrobe99-ai-model')||'gpt-5.6-luna';
+const CATS=['Dress','Top','T-Shirt','Shirt','Blouse','Sweater','Jacket','Coat','Skirt','Pants','Jeans','Shorts','Jumpsuit','Activewear','Outerwear','Other'];
+const COLORS={Black:'#111',White:'#fafafa',Gray:'#8d8d8d',Brown:'#8b5e3c',Beige:'#d8c5a7',Red:'#d83932',Pink:'#e987ad',Orange:'#e98332',Yellow:'#e6c52f',Green:'#4d8b57',Blue:'#3974b9',Purple:'#7d55a8',Navy:'#23375d',Cream:'#f4eddb',Multi:'#999'};
+function openDB(){return new Promise((res,rej)=>{let r=indexedDB.open(DB,1);r.onupgradeneeded=()=>{let d=r.result;if(!d.objectStoreNames.contains(STORE))d.createObjectStore(STORE,{keyPath:'id'})};r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+function all(){return new Promise((res,rej)=>{let r=db.transaction(STORE).objectStore(STORE).getAll();r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+function put(x){return new Promise((res,rej)=>{let r=db.transaction(STORE,'readwrite').objectStore(STORE).put(x);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
+function del(id){return new Promise((res,rej)=>{let r=db.transaction(STORE,'readwrite').objectStore(STORE).delete(id);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
+function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function url(x){return URL.createObjectURL(x.thumbBlob||x.imageBlob)}
+function show(id){$(id).classList.add('show')} function hide(id){$(id).classList.remove('show')}
+function loadImage(file){return new Promise((res,rej)=>{let u=URL.createObjectURL(file),im=new Image;im.onload=()=>{URL.revokeObjectURL(u);res(im)};im.onerror=rej;im.src=u})}
+function resize(im,maxW,maxH,q=.82){let s=Math.min(1,maxW/im.width,maxH/im.height),w=Math.round(im.width*s),h=Math.round(im.height*s),c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);return new Promise(r=>c.toBlob(r,'image/jpeg',q))}
+function dominant(im){let c=document.createElement('canvas'),w=48,h=Math.max(48,Math.round(48*im.height/im.width));c.width=w;c.height=h;let x=c.getContext('2d');x.drawImage(im,0,0,w,h);let d=x.getImageData(0,0,w,h).data,R=0,G=0,B=0,n=0;for(let i=0;i<d.length;i+=16){let r=d[i],g=d[i+1],b=d[i+2];if(r>245&&g>245&&b>245)continue;R+=r;G+=g;B+=b;n++}if(!n)return 'White';R/=n;G/=n;B/=n;let best='Multi',dist=1e9;for(const [name,hex] of Object.entries(COLORS)){if(name==='Multi')continue;let v=parseInt(hex.slice(1),16),r=(v>>16)&255,g=(v>>8)&255,b=v&255,z=(R-r)**2+(G-g)**2+(B-b)**2;if(z<dist){dist=z;best=name}}return best}
+async function toDataURL(blob){return await new Promise((res,rej)=>{let r=new FileReader;r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(blob)})}
+async function classify(x){
+  if(!API_KEY)throw new Error('Open AI settings and add an API key first.');
+  let data=await toDataURL(x.thumbBlob||x.imageBlob);
+  let prompt='Classify this clothing photo. Return ONLY JSON with keys: name, category, garmentType, colors, pattern, brand, sleeve, season, occasion, confidence. category must be one of: '+CATS.join(', ')+'. colors must be 1 to 3 simple color names. pattern examples: Solid, Floral, Striped, Graphic, Animal, Plaid, Polka Dot, Abstract, Other. confidence is 0 to 1.';
+  let body={model:MODEL,input:[{role:'user',content:[{type:'input_text',text:prompt},{type:'input_image',image_url:data}]}],text:{format:{type:'json_object'}}};
+  let r=await fetch('https://api.openai.com/v1/responses',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+API_KEY},body:JSON.stringify(body)});
+  if(!r.ok)throw new Error((await r.text()).slice(0,200));
+  let j=await r.json(),t=j.output_text||'';if(!t&&j.output)for(const o of j.output||[])for(const c of o.content||[])if(c.text)t+=c.text;
+  let a=JSON.parse(t);x.name=a.name||x.name;x.category=CATS.includes(a.category)?a.category:'Other';x.garmentType=a.garmentType||'';x.colors=Array.isArray(a.colors)?a.colors.slice(0,3):x.colors;x.pattern=a.pattern||'';x.brand=a.brand||'';x.sleeve=a.sleeve||'';x.season=a.season||'';x.occasion=a.occasion||'';x.aiConfidence=Math.max(0,Math.min(1,Number(a.confidence)||0));x.aiClassifiedAt=Date.now();x.needsReview=x.aiConfidence<.72;delete x.aiError;return x
+}
+async function refresh(){items=await all();items.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));render()}
+function categories(arr){return ['All',...new Set(arr.map(x=>x.category||'Other')),'Needs review']}
+function render(){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.view===view));
+  $('#viewTitle').textContent=view==='new'?'New Arrivals':'Closet';
+  $('#fab').textContent=view==='new'?'＋ Add new arrival':'＋ Add clothes';
+  let base=items.filter(x=>(x.collection||'closet')===view);
+  let fs=$('#filters');fs.innerHTML='';categories(base).forEach(c=>{let b=document.createElement('button');b.className='chip'+(filter===c?' active':'');b.textContent=c;b.onclick=()=>{filter=c;render()};fs.appendChild(b)});
+  let q=$('#search').value.toLowerCase().trim();
+  let arr=base.filter(x=>(filter==='All'||(filter==='Needs review'?x.needsReview:x.category===filter))&&(!q||[x.name,x.category,x.garmentType,x.pattern,x.brand,...(x.colors||[])].join(' ').toLowerCase().includes(q)));
+  $('#grid').innerHTML=arr.length?'':'<div class="empty">'+(view==='new'?'No new arrivals yet. Tap “Add new arrival”.':'No clothes found.')+'</div>';
+  arr.forEach(x=>{let d=document.createElement('div');d.className='card';d.innerHTML='<div class="photo"><img src="'+url(x)+'"></div><div class="body"><div class="name">'+esc(x.name)+'</div><div class="meta"><span>'+esc(x.category||'Other')+'</span><span>'+(view==='new'?'<span class="newbadge">NEW</span>':(x.needsReview?'Review':'✓'))+'</span></div><div class="swatches">'+(x.colors||[]).map(c=>'<span class="swatch" title="'+esc(c)+'" style="background:'+(COLORS[c]||'#aaa')+'"></span>').join('')+'</div></div>';d.onclick=()=>detail(x);$('#grid').appendChild(d)});
+  $('#shown').textContent=arr.length+' shown';$('#total').textContent=items.length;$('#newCount').textContent=items.filter(x=>(x.collection||'closet')==='new').length;$('#catCount').textContent=new Set(items.map(x=>x.category).filter(Boolean)).size;$('#reviewCount').textContent=items.filter(x=>x.needsReview).length
+}
+function openImport(){importTarget=view;$('#importTitle').textContent=importTarget==='new'?'Upload New Arrivals':'Upload to Closet';$('#importSub').textContent=importTarget==='new'?'These photos will go only into the New Arrivals section. You can move an item to Closet later.':'These photos will be added directly to your Closet.';show('#importModal')}
+async function importFiles(files){
+  if(!files.length)return;$('#progress').classList.add('show');let useAI=$('#useAI').checked&&API_KEY,done=[];
+  for(let i=0;i<files.length;i++){let f=files[i];$('#progressText').textContent='Importing '+(i+1)+' of '+files.length+': '+f.name;$('#bar').style.width=Math.round(i/files.length*100)+'%';try{let im=await loadImage(f),color=dominant(im),imageBlob=await resize(im,1400,1800,.84),thumbBlob=await resize(im,720,960,.78),x={id:'item-'+Date.now()+'-'+i+'-'+Math.random().toString(36).slice(2,7),name:f.name.replace(/\.[^.]+$/,'').replace(/[_-]+/g,' ').trim()||color+' clothing',originalFilename:f.name,category:'Other',colors:[color],pattern:'',imageBlob,thumbBlob,collection:importTarget,needsReview:true,createdAt:Date.now()};await put(x);done.push(x)}catch(e){console.error(e)}}
+  $('#bar').style.width='100%';$('#progressText').textContent='Imported '+done.length+' items'+(useAI?'. AI classification starting…':'');
+  if(useAI){for(let i=0;i<done.length;i++){let x=done[i];$('#progressText').textContent='AI classifying '+(i+1)+' of '+done.length+': '+x.name;$('#bar').style.width=Math.round(i/done.length*100)+'%';try{await classify(x)}catch(e){x.aiError=String(e.message||e);x.needsReview=true}await put(x)}$('#bar').style.width='100%';$('#progressText').textContent='Finished. '+done.length+' items added to '+(importTarget==='new'?'New Arrivals.':'Closet.')}
+  await refresh()
+}
+async function classifyPending(){let q=items.filter(x=>!x.aiClassifiedAt||x.aiError);if(!q.length){$('#progress').classList.add('show');$('#progressText').textContent='No pending items.';return}if(!API_KEY){hide('#importModal');openSettings();return}for(let i=0;i<q.length;i++){let x=q[i];$('#progress').classList.add('show');$('#progressText').textContent='AI '+(i+1)+' of '+q.length+': '+x.name;$('#bar').style.width=Math.round(i/q.length*100)+'%';try{await classify(x)}catch(e){x.aiError=String(e.message||e)}await put(x)}$('#bar').style.width='100%';$('#progressText').textContent='AI classification finished.';await refresh()}
+function detail(x){current=x;$('#detail').innerHTML='<img class="detail-img" src="'+url(x)+'"><h3>'+esc(x.name)+'</h3><div class="tags">'+(x.colors||[]).map(c=>'<span class="tag">'+esc(c)+'</span>').join('')+(x.aiClassifiedAt?'<span class="tag">AI classified</span>':'')+(x.collection==='new'?'<span class="newbadge">NEW ARRIVAL</span>':'')+'</div><div class="detail-grid"><div class="info"><small>Category</small><b>'+esc(x.category||'—')+'</b></div><div class="info"><small>Garment type</small><b>'+esc(x.garmentType||'—')+'</b></div><div class="info"><small>Pattern</small><b>'+esc(x.pattern||'—')+'</b></div><div class="info"><small>Brand</small><b>'+esc(x.brand||'—')+'</b></div><div class="info"><small>Sleeve</small><b>'+esc(x.sleeve||'—')+'</b></div><div class="info"><small>Season</small><b>'+esc(x.season||'—')+'</b></div><div class="info"><small>Occasion</small><b>'+esc(x.occasion||'—')+'</b></div><div class="info"><small>AI confidence</small><b>'+(x.aiConfidence?Math.round(x.aiConfidence*100)+'%':'—')+'</b></div></div>';$('#moveItem').style.display=(x.collection||'closet')==='new'?'block':'none';show('#detailModal')}
+function openSettings(){$('#apiKey').value=API_KEY;$('#model').value=MODEL;show('#settingsModal')}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{view=b.dataset.view;filter='All';render()});
+$('#search').oninput=render;$('#fab').onclick=openImport;$('#addBtn').onclick=openImport;$('#drop').onclick=()=>$('#fileInput').click();$('#fileInput').onchange=e=>importFiles([...e.target.files]);$('#closeImport').onclick=()=>hide('#importModal');$('#classifyPending').onclick=classifyPending;
+$('#aiBtn').onclick=openSettings;$('#closeSettings').onclick=()=>hide('#settingsModal');$('#saveSettings').onclick=()=>{API_KEY=$('#apiKey').value.trim();MODEL=$('#model').value;sessionStorage.setItem('wardrobe99-ai-key',API_KEY);sessionStorage.setItem('wardrobe99-ai-model',MODEL);hide('#settingsModal')};
+$('#closeDetail').onclick=()=>hide('#detailModal');$('#moveItem').onclick=async()=>{if(!current)return;current.collection='closet';await put(current);hide('#detailModal');await refresh()};$('#deleteItem').onclick=async()=>{if(current&&confirm('Delete this clothing item?')){await del(current.id);hide('#detailModal');await refresh()}};
+['#importModal','#settingsModal','#detailModal'].forEach(s=>$(s).addEventListener('click',e=>{if(e.target===$(s))hide(s)}));
+(async()=>{db=await openDB();await refresh()})();
+</script>
+</body>
+</html>
